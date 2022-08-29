@@ -1,0 +1,31 @@
+@startuml
+
+title Lectores
+
+hide empty members
+
+interface Lector {
+    + obtener(): ArrayList
+    + esDeTipo(tipoArchivo): boolean
+}
+
+LectorDeCartasJSON ..|> Lector
+LectorDeObjetivosJSON ..|> Lector
+LectorDePaisesJSON ..|> Lector
+
+class LectorDeCartasJSON {
+    + {static} LectorDeCartasJSON(): LectorDeCartasJSON
+    - obtenerCarta(carta: JSONObject): Carta
+}
+
+class LectorDeObjetivosJSON {
+    + {static} LectorDeObjetivosJSON(): LectorDeObjetivosJSON
+    - obtenerObjetivo(objetivo: JSONObject): Objetivo
+}
+
+class LectorDePaisesJSON {
+    + {static} LectorDePaisesJSON(): LectorDePaisesJSON
+    - obtenerPais(pais: JSONObject): Pais
+}
+
+@enduml

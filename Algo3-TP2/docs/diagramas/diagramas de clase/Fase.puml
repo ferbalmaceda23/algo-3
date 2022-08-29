@@ -1,0 +1,56 @@
+@startuml
+
+title Fases
+
+hide empty members
+
+interface Fase {
+    + jugar(cantidadEjercitos: int, paises: Array): void
+    + siguienteFase(cartas: ArrayList): Fase
+}
+
+FaseAgrupamiento ..|> Fase
+FaseAtaque ..|> Fase
+FaseColocacion ..|> Fase
+
+class FaseAgrupamiento {
+    - jugadorDeTurno: Jugador
+    - origen: int
+    - destino: int
+    + {static} FaseAgrupamiento(jugadorDeTurno): FaseAgrupamiento
+    + siguienteFase(cartas: ArrayList): FaseAtaque
+}
+
+class FaseAtaque {
+    - jugadorDeTurno: Jugador
+    - posAtacante: int
+    - posAtacado: int
+    - cartas: ArrayList
+    - huboConquista: boolean
+    + {static} FaseAtaque(jugadorDeTurno, cartas): FaseAtaque
+    + siguienteFase(cartas: ArrayList): FaseAgrupamiento
+
+}
+
+class FaseColocacion {
+    - jugadorDeTurno: Jugador
+    - fichasColocadas: int
+    - fichasDelJugador: int
+    + {static} FaseColocacion(jugadorDeTurno): FaseColocacion
+    + agregarFichasDelCanje(fichas: int): void
+    + siguienteFase(cartas: ArrayList): FaseColocacion
+    + activarCarta(unaCarta: Carta): void
+}
+
+class FaseInicial {
+    + fichasColocadas: int
+    + jugadorDeTurno: Jugador
+    + nombre: String
+    + fichasIniciales: int
+    + {static} FaseInicial(jugadorDeTurno, fichasIniciales): FaseInicial
+    + agregarFichasDelCanje(fichas: int): void
+}
+
+FaseInicial ..|> Fase
+
+@enduml
